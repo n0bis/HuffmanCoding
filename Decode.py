@@ -3,7 +3,7 @@ import sys
 import PQHeap
 import bitIO
 from Element import Element
-from Encode import make_frequency, make_heap, merge_nodes, huffman_code_tree
+from Encode import make_heap, merge_nodes, huffman_code_tree
 
 
 def decode_text():
@@ -11,13 +11,11 @@ def decode_text():
 
 
 def decompress(codes, bitstreamin, out):
-    print(codes)
     while True:
         x = bitstreamin.readbit()
-        print(x)
-        if not bitstreamin.readsucces(): # End-of-file?
+        if not x: # End-of-file?
             break
-        print(codes[x])
+    print(codes[x])
 
 
 def read_frequency(bitstreamin):
