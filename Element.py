@@ -12,3 +12,15 @@ class Element:
 
     def __lt__(self,other):
         return self.key < other.key
+
+    def __str__(self):
+        return 'a'
+
+    def __unicode__(self):
+        return u'a'
+
+    def __repr__(self):
+        return str(self.key) + "  " + str(self.data)
+
+    def __hash__(self):
+        return hash(self.key) ^ hash(self.data)
