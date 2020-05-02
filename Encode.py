@@ -37,8 +37,8 @@ def huffman_code_tree(node, current_code='', d=[0] * 256):
     if type(node.data) is int:
         return d.insert(node.data, current_code)
 
-    d.append(huffman_code_tree(node.data[0], current_code + '0', d))
-    d.append(huffman_code_tree(node.data[1], current_code + '1', d))
+    huffman_code_tree(node.data[0], current_code + '0', d)
+    huffman_code_tree(node.data[1], current_code + '1', d)
     return d
 
 

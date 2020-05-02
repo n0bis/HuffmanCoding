@@ -11,11 +11,13 @@ def decode_text():
 
 
 def decompress(codes, bitstreamin, out):
+    print(codes)
     while True:
         x = bitstreamin.readbit()
+        print(x)
         if not bitstreamin.readsucces(): # End-of-file?
             break
-        print(x)
+    print(x)
 
 
 def read_frequency(bitstreamin):
