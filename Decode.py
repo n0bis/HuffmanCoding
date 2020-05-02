@@ -22,12 +22,9 @@ def decompress(codes, bitstreamin, out):
 
 def read_frequency(bitstreamin):
     table = [0] * 256
-    while True:
-        hyp = bitstreamin.readint32bits()
-        i = bitstreamin.readbit()
-        if not bitstreamin.readsucces():  # End-of-file?
-            break
-        print('hyp: ', hyp)
+    for i in range(len(table)):
+        x = bitstreamin.readint32bits()
+        table[i] = x
     return table
 
 
