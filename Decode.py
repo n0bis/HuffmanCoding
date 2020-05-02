@@ -13,7 +13,7 @@ def decode_text():
 def decompress(codes, bitstreamin, out):
     while True:
         x = bitstreamin.readbit()
-        if not x: # End-of-file?
+        if not bitstreamin.readsucces(): # End-of-file?
             break
         print(x)
 
