@@ -41,6 +41,7 @@ if __name__ == '__main__':
     pq = make_heap(frequency)
     merge_nodes(pq)
     codes = huffman_code_tree(pq[0])
+    total = sum(frequency) # sum of bytes in original file
     decompress(codes, bitstreamin, bitstreamout)
 
     bitstreamin.close()
