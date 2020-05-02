@@ -15,14 +15,13 @@ def decompress(codes, bitstreamin, out):
         x = bitstreamin.readbit()
         if not x: # End-of-file?
             break
-    print(codes[x])
+        print(x)
 
 
 def read_frequency(bitstreamin):
     table = [0] * 256
     for i in range(len(table)):
-        x = bitstreamin.readint32bits()
-        table[i] = x
+        table[i] = bitstreamin.readint32bits()
     return table
 
 
