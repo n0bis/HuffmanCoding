@@ -54,7 +54,6 @@ def compress(codes, infile, bitstreamout):
         if not x:
             break
         code = codes[x[0]]
-        print('code: ', code)
         for bit in code:
             bitstreamout.writebit(int(bit))
 
