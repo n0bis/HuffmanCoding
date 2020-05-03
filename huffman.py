@@ -75,11 +75,9 @@ class Huffman:
         self.bitstreamout.close()
 
     def decompress(self):
-
         frequency = self.read_frequency()
         pq = self.make_heap(frequency)
         self.merge_nodes(pq)
-        codes = self.huffman_code_tree(pq[0])
         total = sum(frequency)  # sum of bytes in original file
 
         element = pq[0]
