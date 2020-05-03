@@ -26,7 +26,6 @@ def decompress(codes, bitstreamin, out, file, total, pq):
     for bit in range(total):
         x = file.read(1)
         code = decode_text(codes[ord(x)], pq)
-        print(code)
         if code:
             out.write(bytes(code, encoding='utf-8'))
 
