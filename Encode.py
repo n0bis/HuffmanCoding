@@ -47,14 +47,16 @@ def write_frequency(frequency, out):
         out.writeint32bits(int(frequency[freq]))
 
 
-def compress(codes, infile, out):
+def compress(codes, infile, bitstreamout):
+    infile.seek(0)
     while True:
         x = infile.read(1)
         if not x:
             break
         code = codes[x[0]]
-        for i in range(len(code)):
-            out.writebit(codes[i])
+        print('code: ', code)
+        for bit in code:
+            bitstreamout.writebit(int(bit))
 
 
 if __name__ == '__main__':
