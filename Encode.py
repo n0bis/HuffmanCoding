@@ -48,7 +48,7 @@ def write_frequency(frequency, out):
 
 
 def compress(codes, infile, bitstreamout):
-    infile.seek(0)
+    #infile.seek(0)
     while True:
         x = infile.read(1)
         if not x:
