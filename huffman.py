@@ -57,6 +57,7 @@ class Huffman:
 
     def compress(self):
         frequency = self.make_frequency()
+        # return file pointer to start of file
         self.infile.seek(0)
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
