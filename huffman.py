@@ -20,6 +20,7 @@ class Huffman:
             byte = ord(x)
             bits = bin(byte)[2:].rjust(8, '0')
             self.table[byte] += 1
+        self.infile.seek(0) # return file pointer to start of file
         return self.table
 
     def make_heap(self, frequency):
@@ -29,13 +30,13 @@ class Huffman:
             PQHeap.insert(pq, e)
         return pq
 
-    def merge_nodes(self, q):
-        for i in range(len(q)-1):
-            left = PQHeap.extractMin(q)
-            right = PQHeap.extractMin(q)
+    def merge_nodes(self, pq):
+        while len(pq) > 1:
+            left = PQHeap.extractMin(pq)
+            right = PQHeap.extractMin(pq)
             z = Element(left.key + right.key, [left, right])
-            PQHeap.insert(q, z)
-        return PQHeap.extractMin(q)
+            PQHeap.insert(pq, z)
+        return PQHeap.extractMin(pq)
 
     def make_code(self, root, current_code=''):
         if type(root.data) is int:
@@ -57,8 +58,6 @@ class Huffman:
 
     def compress(self):
         frequency = self.make_frequency()
-        # return file pointer to start of file
-        self.infile.seek(0)
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
         self.make_code(root)
