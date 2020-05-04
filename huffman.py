@@ -6,6 +6,7 @@ class Huffman:
 
     def __init__(self, infile, outfile):
         self.table = [0] * 256
+        self.codes = [0] * 256
         self.infile = infile
         self.outfile = outfile
         self.bitstreamin = bitIO.BitReader(infile)
@@ -28,21 +29,21 @@ class Huffman:
             PQHeap.insert(pq, e)
         return pq
 
-    def merge_nodes(self, pq):
-        while len(pq) > 1:
-            left = PQHeap.extractMin(pq)
-            right = PQHeap.extractMin(pq)
+    def merge_nodes(self, q):
+        for i in range(len(q)-1):
+            left = PQHeap.extractMin(q)
+            right = PQHeap.extractMin(q)
             z = Element(left.key + right.key, [left, right])
-            PQHeap.insert(pq, z)
+            PQHeap.insert(q, z)
+        return PQHeap.extractMin(q)
 
-    def make_code(self, node, current_code='', d=[0] * 256):
-        if type(node.data) is int:
-            d[node.data] = current_code
+    def make_code(self, root, current_code=''):
+        if type(root.data) is int:
+            self.codes[root.data] = current_code
             return
 
-        self.make_code(node.data[0], current_code + '0', d)
-        self.make_code(node.data[1], current_code + '1', d)
-        return d
+        self.make_code(root.data[0], current_code + '0')
+        self.make_code(root.data[1], current_code + '1')
 
     def write_frequency(self, frequency):
         for freq in range(len(frequency)):
@@ -57,8 +58,8 @@ class Huffman:
     def compress(self):
         frequency = self.make_frequency()
         pq = self.make_heap(frequency)
-        self.merge_nodes(pq)
-        codes = self.make_code(pq[0])
+        root = self.merge_nodes(pq)
+        self.make_code(root)
         self.write_frequency(frequency)
 
         self.infile.seek(0)
@@ -66,7 +67,7 @@ class Huffman:
             x = self.infile.read(1)
             if not x:
                 break
-            code = codes[ord(x)]
+            code = self.codes[ord(x)]
             if code:
                 for bit in code:
                     self.bitstreamout.writebit(int(bit))
@@ -77,17 +78,16 @@ class Huffman:
     def decompress(self):
         frequency = self.read_frequency()
         pq = self.make_heap(frequency)
-        self.merge_nodes(pq)
+        root = self.merge_nodes(pq)
         total = sum(frequency)  # sum of bytes in original file
 
-        element = pq[0]
+        element = root
         while total > 0:
             x = self.bitstreamin.readbit()
-            print(x)
             if type(element.data) is int:
                 self.outfile.write(bytes([element.data]))
                 total = total - 1
-                element = pq[0]
+                element = root
             else:
                 element = element.data[x]
 
