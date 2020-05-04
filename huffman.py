@@ -57,12 +57,12 @@ class Huffman:
 
     def compress(self):
         frequency = self.make_frequency()
+        self.infile.seek(0)
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
         self.make_code(root)
         self.write_frequency(frequency)
 
-        self.infile.seek(0)
         while True:
             x = self.infile.read(1)
             if not x:
