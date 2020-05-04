@@ -35,13 +35,13 @@ class Huffman:
             z = Element(left.key + right.key, [left, right])
             PQHeap.insert(pq, z)
 
-    def huffman_code_tree(self, node, current_code='', d=[0] * 256):
+    def make_code(self, node, current_code='', d=[0] * 256):
         if type(node.data) is int:
             d[node.data] = current_code
             return
 
-        self.huffman_code_tree(node.data[0], current_code + '0', d)
-        self.huffman_code_tree(node.data[1], current_code + '1', d)
+        self.make_code(node.data[0], current_code + '0', d)
+        self.make_code(node.data[1], current_code + '1', d)
         return d
 
     def write_frequency(self, frequency):
@@ -58,7 +58,7 @@ class Huffman:
         frequency = self.make_frequency()
         pq = self.make_heap(frequency)
         self.merge_nodes(pq)
-        codes = self.huffman_code_tree(pq[0])
+        codes = self.make_code(pq[0])
         self.write_frequency(frequency)
 
         self.infile.seek(0)
