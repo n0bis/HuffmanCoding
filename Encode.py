@@ -10,5 +10,4 @@ if __name__ == '__main__':
     outfile = open('secretCompressed.txt', 'wb')
 
     h = Huffman(infile, outfile)
-
     h.compress()
