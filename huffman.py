@@ -26,8 +26,8 @@ class Huffman:
 
     def make_heap(self, frequency):
         pq = []
-        for key in range(len(frequency)):
-            e = Element(frequency[key], key)
+        for key, freq in enumerate(frequency):
+            e = Element(freq, key)
             PQHeap.insert(pq, e)
         return pq
 
@@ -48,8 +48,8 @@ class Huffman:
         self.make_code(root.data[1], current_code + '1')
 
     def write_frequency(self, frequency):
-        for freq in range(len(frequency)):
-            self.bitstreamout.writeint32bits(int(frequency[freq]))
+        for i, freq in enumerate(frequency):
+            self.bitstreamout.writeint32bits(int(freq))
 
     def read_frequency(self):
         table = [0] * 256
