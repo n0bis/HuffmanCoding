@@ -7,7 +7,6 @@ class Huffman:
     def __init__(self, infile, outfile):
         self.table = [0] * 256
         self.codes = [0] * 256
-        self.reverse_mapping = {}
         self.infile = infile
         self.outfile = outfile
         self.bitstreamin = bitIO.BitReader(infile)
