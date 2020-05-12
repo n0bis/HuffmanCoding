@@ -151,17 +151,17 @@ class Huffman:
         frequency = self.read_frequency()
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
-        total = sum(frequency)  # sum of bytes in original file
-        element = root
+        bit_counter = sum(frequency)  # sum of bytes in original file
 
-        while total > 0:
+        element = root
+        while bit_counter > 0:
             bit = self.bitstreamin.readbit()
             element = element.data[bit]
-            if type(element.data) is int: # if leaf is hit
+            if type(element.data) is int:  # if leaf is hit
                 # Write to file and reset cursor
                 self.outfile.write(bytes([element.data]))
-                total = total - 1 # bytes read
                 element = root
+                bit_counter -= 1
 
         self.bitstreamin.close()
         self.bitstreamout.close()
