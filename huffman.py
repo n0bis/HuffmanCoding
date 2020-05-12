@@ -165,3 +165,4 @@ class Huffman:
 
         self.bitstreamin.close()
         self.bitstreamout.close()
+        
