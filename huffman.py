@@ -93,7 +93,7 @@ class Huffman:
             :return:
         """
         if type(root.data) is int: # leaf is hit
-            self.codes[root.data] = current_code + '1'
+            self.codes[root.data] = current_code + '1' # bug? character is placed at index 1 in path
             return
 
         self.make_code(root.data[0], current_code + '0')
