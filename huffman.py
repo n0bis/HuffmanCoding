@@ -64,7 +64,7 @@ class Huffman:
         """
         pq = []
         for key, freq in enumerate(frequency):
-            PQHeap.insert(pq, Element(freq, [key]))
+            PQHeap.insert(pq, Element(freq, key))
         return pq
 
     def merge_nodes(self, pq):
@@ -92,14 +92,12 @@ class Huffman:
             :param str current_code:
             :return:
         """
-        self.make_code(root.data[0], current_code + '0')
         if type(root.data) is int: # leaf is hit
             self.codes[root.data] = current_code # bug? character is placed at index 1 in path
             return
 
-        self.in_order_walk_helper(path + '0', node[0].data)
-
-        self.in_order_walk_helper(path + '1', node[1].data)
+        self.make_code(root.data[0], current_code + '0')
+        self.make_code(root.data[1], current_code + '1')
 
     def write_frequency(self, frequency):
         """
@@ -129,8 +127,7 @@ class Huffman:
         frequency = self.make_frequency()
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
-        #self.make_code(root)
-        self.in_order_walk_with_path(root)
+        self.make_code(root)
         self.write_frequency(frequency)
 
         while True:
