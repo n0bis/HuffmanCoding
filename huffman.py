@@ -152,19 +152,8 @@ class Huffman:
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
         total = sum(frequency)  # sum of bytes in original file
-        """
         element = root
-        while total > 0:
-            x = self.bitstreamin.readbit()
-            if type(element.data) is int: # if leaf is hit
-                self.outfile.write(bytes([element.data]))
-                total = total - 1 # bytes read
-                element = root
-            else:
-                element = element.data[x] # navigate through tree structure
-        """
-        element = root
-        
+
         while total > 0:
             bit = self.bitstreamin.readbit()
             element = element.data[bit]
