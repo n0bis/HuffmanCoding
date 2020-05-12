@@ -39,7 +39,7 @@ def decompress_each_file_in_folder():
             print(filename)
             filename, file_extension = os.path.splitext(filename)
             infile = open(f'{path}{filename}{file_extension}', 'rb')
-            outfile = open(f'{path}{filename}_decompressed{file_extension}', 'wb')
+            outfile = open(f'{path}{filename.split("_")[0]}_decompressed{file_extension}', 'wb')
             h = Huffman(infile, outfile)
             h.decompress()
 
