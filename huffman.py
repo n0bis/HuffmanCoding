@@ -164,6 +164,7 @@ class Huffman:
                 element = element.data[x] # navigate through tree structure
         """
         element = root
+        
         while total > 0:
             bit = self.bitstreamin.readbit()
             element = element.data[bit]
