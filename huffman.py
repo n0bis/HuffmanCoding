@@ -93,7 +93,7 @@ class Huffman:
             :return:
         """
         if type(root.data) is int: # leaf is hit
-            self.codes[root.data] = current_code + '1' # bug? character is placed at index 1 in path
+            self.codes[root.data] = current_code # bug? character is placed at index 1 in path
             return
 
         self.make_code(root.data[0], current_code + '0')
@@ -152,16 +152,16 @@ class Huffman:
         pq = self.make_heap(frequency)
         root = self.merge_nodes(pq)
         total = sum(frequency)  # sum of bytes in original file
-
         element = root
+
         while total > 0:
-            x = self.bitstreamin.readbit()
+            bit = self.bitstreamin.readbit()
+            element = element.data[bit]
             if type(element.data) is int: # if leaf is hit
+                # Write to file and reset cursor
                 self.outfile.write(bytes([element.data]))
                 total = total - 1 # bytes read
                 element = root
-            else:
-                element = element.data[x] # navigate through tree structure
 
         self.bitstreamin.close()
         self.bitstreamout.close()
