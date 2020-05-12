@@ -32,14 +32,22 @@ from os import listdir
 
 from huffman import Huffman
 
-if __name__ == '__main__':
-    #infile = open(sys.argv[1], 'rb')
-    #outfile = open(sys.argv[2], 'wb')
+def compress_each_file_in_folder():
     path = './testfiles/'
     for filename in listdir(path):
-        print(filename)
-        filename, file_extension = os.path.splitext(filename)
-        infile = open(f'{path}{filename}{file_extension}', 'rb')
-        outfile = open(f'{path}{filename}_compressed{file_extension}', 'wb')
-        h = Huffman(infile, outfile)
-        h.compress()
+        if '_compressed' not in filename and '_decompressed' not in filename:
+            print(filename)
+            filename, file_extension = os.path.splitext(filename)
+            infile = open(f'{path}{filename}{file_extension}', 'rb')
+            outfile = open(f'{path}{filename}_compressed{file_extension}', 'wb')
+            h = Huffman(infile, outfile)
+            h.compress()
+
+def compress_files():
+    infile = open('./testfiles/same.txt', 'rb')
+    outfile = open('./testfiles/same_compressed.txt', 'wb')
+    h = Huffman(infile, outfile)
+    h.compress()
+
+if __name__ == '__main__':
+    compress_each_file_in_folder()
